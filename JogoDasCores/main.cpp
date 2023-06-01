@@ -13,7 +13,7 @@
 #include <random>
 using namespace std;
 
-int points = 0, tentativa = 0;
+int points = 0, tentativa = 0, pointsTentativa = 0;
 const int quadradosX = 20, quadradosY = 20, porcentagem = 8;
 
 GLuint shaderProgram;
@@ -77,6 +77,7 @@ void analiseCores(int x, int y) {
     float width = 2.0f / quadradosX;
     float height = 2.0f / quadradosY;
 
+
     if (quadrados[x][y].visible) {
         float red = quadrados[x][y].red;
         float green = quadrados[x][y].green;
@@ -105,7 +106,7 @@ void analiseCores(int x, int y) {
                     // Verifica se a distância está dentro do limite
                     if (distanciaCores < distancia) {
                         quadrados[i][j].visible = false;
-                        points++;
+                        pointsTentativa++;
                     }
                 }
             }
@@ -144,13 +145,21 @@ void glfwMouseButtonCallback(GLFWwindow* window, int button, int action, int mod
             analiseCores(posicaoX, posicaoY);
 
             tentativa++;
-            if (points > 35) {
-                cout << "Parabens! Pontuacao: " << points << endl;
+            if (pointsTentativa > 35) {
+                cout << "Parabens! Pontuacao: " << pointsTentativa << endl;
             }
             else {
-                cout << "Tente novamente, pontuacao: " << points << endl;
+                cout << "Tente novamente, pontuacao: " << pointsTentativa << endl;
             }
-            points = 0;
+            points += pointsTentativa;
+            pointsTentativa = 0;
+        }
+    }
+    else if (tentativa == 3) {
+        if (points < 140) {
+            cout << "Foi bom, mas voce consegue mais. Nas tres tentativas, voce totalizou " << points << " pontos!" << endl;
+        } else {
+            cout << "Parabens!! Nas tres tentativas, voce totalizou " << points << " pontos!" << endl;
         }
     }
 }
