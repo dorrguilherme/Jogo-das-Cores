@@ -106,7 +106,11 @@ void analiseCores(int x, int y) {
                     // Verifica se a distância está dentro do limite
                     if (distanciaCores < distancia) {
                         quadrados[i][j].visible = false;
-                        pointsTentativa++;
+                        switch (tentativa) {
+                        case 0: pointsTentativa += 3; break;
+                        case 1: pointsTentativa += 2; break;
+                        case 2: pointsTentativa += 1; break;
+                        }
                     }
                 }
             }
@@ -145,18 +149,18 @@ void glfwMouseButtonCallback(GLFWwindow* window, int button, int action, int mod
             analiseCores(posicaoX, posicaoY);
 
             tentativa++;
-            if (pointsTentativa > 35) {
+            if (pointsTentativa > 60) {
                 cout << "Parabens! Pontuacao: " << pointsTentativa << endl;
             }
             else {
-                cout << "Tente novamente, pontuacao: " << pointsTentativa << endl;
+                cout << "Pontuacao: " << pointsTentativa << endl;
             }
             points += pointsTentativa;
             pointsTentativa = 0;
         }
     }
     else if (tentativa == 3) {
-        if (points < 140) {
+        if (points < 200) {
             cout << "Foi bom, mas voce consegue mais. Nas tres tentativas, voce totalizou " << points << " pontos!" << endl;
         } else {
             cout << "Parabens!! Nas tres tentativas, voce totalizou " << points << " pontos!" << endl;
